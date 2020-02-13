@@ -5,8 +5,8 @@ export function addNote(note) {
   return { type: C.ADD_NOTE, note }
 }
 
-export const editNote = noteId => {
-  return { type: C.EDIT_NOTE, noteId }
+export const editNote = note => {
+  return { type: C.EDIT_NOTE, note }
 }
 
 export const deleteNote = function(noteId) {
