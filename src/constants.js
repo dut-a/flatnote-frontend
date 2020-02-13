@@ -7,6 +7,11 @@ const constants = {
   CANCEL_FETCHING: "CANCEL_FETCHING",
 	ADD_ERROR: "ADD_ERROR",
 	CLEAR_ERROR: "CLEAR_ERROR",
+	ACTIONS: {
+		ADDING: "ADDING",
+		VIEWING: "VIEWING",
+		EDITING: "EDITING"
+	},
   URLS: {
     FLATNOTES_API: 'http://localhost:3003/api/v1/notes'
   }

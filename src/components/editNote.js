@@ -1,37 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import uuid from "uuid";
-import { addNote } from '../actions/notes'
+import { editNote } from '../actions/notes'
 
-class CreateNote extends Component {
+class EditNote extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      details: '',
-      tags: ''
+      id: this.props.note.id,
+      title: this.props.note.title,
+      details: this.props.note.details,
+      tags: this.props.note.tags
     };
   }
 
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
+  // handleChange = event => {
+  //   this.setState({
+  //     [event.target.name]: event.target.value
+  //   });
+  // };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    let note = {
-      id: uuid(),
-      ...this.state
-    }
-    this.props.addNote(note);
-  }
+  // handleSubmit = event => {
+  //   event.preventDefault();
+  //   this.props.addNote(this.state);
+  // }
 
   render() {
     return(
       <div>
-        <div>Add Note</div>
+        <div>Edit Note</div>
         <form onSubmit={e => this.handleSubmit(e) } >
           <div>
             <label>
@@ -55,6 +51,7 @@ class CreateNote extends Component {
               />
             </label>
           </div>
+
           <div>
             <label>
               Tags:
@@ -66,6 +63,7 @@ class CreateNote extends Component {
               />&nbsp;
             </label>
           </div>
+
           <div>
             <input type="submit" value="Save" />
           </div>
@@ -75,10 +73,17 @@ class CreateNote extends Component {
   }
 }
 
+const mapStateToProps = (state, note) => {
+  console.log("editNote:", state)
+  return {
+    note
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
-    addNote: note => dispatch(addNote(note))
+    editNote: note => dispatch(editNote(note))
   };
 };
 
-export default connect(null, mapDispatchToProps)(CreateNote);
+export default connect(mapStateToProps, mapDispatchToProps)(EditNote);

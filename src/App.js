@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import CreateNote from './components/createNote'
 import './App.css';
+import NotesContainer from './components/containers/NotesContainer';
 
 class App extends Component {
   render() {
     return (
       <div className="container App">
-        <CreateNote />
+        <NotesContainer />
       </div>
     );
   }

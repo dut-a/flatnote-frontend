@@ -11,7 +11,9 @@ import { createStore } from 'redux';
 let store = createStore(noteReducer);
 
 render(
-  <Provider store={store}><App /></Provider>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 
