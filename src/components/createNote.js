@@ -30,7 +30,6 @@ class CreateNote extends Component {
   render() {
     return(
       <div>
-        <div>Add Note</div>
         <form onSubmit={e => this.handleSubmit(e) } >
           <div>
             <label>

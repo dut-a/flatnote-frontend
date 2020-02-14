@@ -37,7 +37,6 @@ class ViewNote extends Component {
   render() {
     return(
       <div>
-        <div>Edit Note</div>
         <form onSubmit={e => this.handleSubmit(e) } >
           <div>
             <h1>{this.props.note.title}</h1>

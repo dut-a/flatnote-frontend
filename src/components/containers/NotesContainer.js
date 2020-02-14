@@ -54,13 +54,12 @@ class NotesContainer extends Component {
       <div className="note-list">
       <div className="container">
         <div className="row">
-          <div className="col-5">
+          <div className="col-5" style={{overflowY: "auto", height: "640px"}}>
             Notes list
             { this.props.notes.length > 0 ?
               this.handleLoading() : this.noNotes() }
           </div>
           <div className="col-7">
-            Adding/Viewing/Editing
             { this.props.viewing ?
               ((this.props.notes.length > 0 && this.props.noteInView !== null) ?
                 <ViewNote note={this.props.noteInView} /> : null) :

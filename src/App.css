@@ -37,3 +37,19 @@
     transform: rotate(360deg);
   }
 }
+
+.note-list {
+  border-bottom: 1px dotted #d28080;
+}
+
+.note-list h1, .note-list p {
+  text-align: left;
+}
+.note-list h1 {
+  font-size: 1.25em;
+}
+.note-list p {
+  font-size: 0.9em;
+}
+
+
