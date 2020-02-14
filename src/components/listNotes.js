@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
 
-/** Unused, implement it as a child of "NotesContainerc" */
+/** TODO: Unused, implement it as a child of "NotesContainerc" */
 class ListNotes extends Component {
 
   // handleChange = event => {

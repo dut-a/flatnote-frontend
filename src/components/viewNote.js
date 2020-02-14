@@ -2,17 +2,37 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { deleteNote, editNote } from '../actions/notes'
 
-class ViewNote extends Component {
-  // handleChange = event => {
-  //   this.setState({
-  //     [event.target.name]: event.target.value
-  //   });
-  // };
+import {
+  startAdding,
+  finishAdding,
+  startViewing,
+  finishViewing,
+  startEditing,
+  finishEditing
+} from '../actions/notes';
 
-  // handleDelete = event => {
-  //   event.preventDefault();
-  //   this.props.addDelete(this.state);
-  // }
+class ViewNote extends Component {
+
+  stopViewing = () => {
+    this.props.stopViewing();
+  }
+
+  startEditing = () => {
+    this.props.startEditing();
+  }
+
+  handleEditing = event => {
+    event.preventDefault();
+    this.stopViewing();
+    this.startEditing();
+    console.log("EDITING the note: ", this.props.note);
+    console.log("CURRENT PROPS (VN):", this.props);
+  }
+
+  handleDelete = event => {
+    event.preventDefault();
+    this.props.addDelete(this.state);
+  }
 
   render() {
     return(
@@ -33,20 +53,11 @@ class ViewNote extends Component {
           <div>
             <button
               name="delete"
-              onClick={e => {
-                e.preventDefault();
-                console.log("DELETING the note with Id: ", this.props.note.id);
-                // this.props.delete(this.props.note.id);
-              } }
+              onClick={e => this.handleEditing(e) }
             >Delete</button>
             <button
               name="edit"
-              onClick={e => {
-                e.preventDefault();
-                console.log("EDITING the note: ", this.props.note);
-                // this.props.history.push('/edit/'+this.props.note.id)
-                // this.props.edit(this.props.note);
-              } }
+              onClick={e => this.handleEditing(e) }
             >Edit</button>
           </div>
        </form>
@@ -55,28 +66,24 @@ class ViewNote extends Component {
   }
 }
 
-const mapStateToProps = (state, note) => {
-  console.log("viewNote:", state)
+const mapStateToProps = state => {
   return {
-    note: state.allNotes.notes[0],
-    // editing: state.editing
+    note: state.noteInView.data,
+    fetching: state.fetching,
+    editing: state.editing,
+    adding: state.adding,
+    viewing: state.viewing
   }
 }
  
 const mapDispatchToProps = dispatch => {
   return {
     delete: noteId => dispatch(deleteNote(noteId)),
-    edit: note => dispatch(editNote(note))
+    edit: note => dispatch(editNote(note)),
+    stopViewing: () => dispatch(finishViewing()),
+    startEditing: () => dispatch(startEditing()),
   }
 }
-
-
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     editNote: note => dispatch(editNote(note))
-//   };
-// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewNote);
 

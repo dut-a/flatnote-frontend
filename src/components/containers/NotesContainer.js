@@ -5,18 +5,51 @@ import EditNote from '../editNote';
 import ViewNote from '../viewNote';
 import { connect } from 'react-redux'
 import Note from '../Note';
+import {
+  fetchNotes,
+  updateNoteInView,
+  startAdding,
+  finishAdding,
+  startViewing,
+  finishViewing,
+  startEditing,
+  finishEditing
+} from '../../actions/notes';
 
 class NotesContainer extends Component {
+  componentDidMount() {
+    this.props.fetchNotes();
+  }
+
+  handleClick = note => {
+    this.props.updateCurrentNote(note);
+    this.startViewing();
+    console.log("CURRENT PROPS:", this.props);
+  }
+
+  startViewing = () => {
+    this.props.startViewing();
+  }
+
+  // stopViewing = () => {
+  //   this.props.stopViewing();
+  // }
+
   renderNotes = () => this.props.notes.map(note => {
-    return <Note
-              key={note.id}
-              note={note}
-            />
+    return <Note key={note.id} note={note} handleClick={this.handleClick} />
   });
+
   noNotes = () => <p>No notes added yet...</p>;
   
+  handleLoading = () => {
+    if(this.props.fetching) {
+      return <div>Loading Data...</div>
+    } else {
+      return this.renderNotes();
+    }
+  }
+  
   render() {
-    // let noteCount = this.props.notes.length;
     return (
       <div className="note-list">
       <div className="container">
@@ -24,32 +57,43 @@ class NotesContainer extends Component {
           <div className="col-5">
             Notes list
             { this.props.notes.length > 0 ?
-              this.renderNotes() : this.noNotes() }
+              this.handleLoading() : this.noNotes() }
           </div>
           <div className="col-7">
             Adding/Viewing/Editing
-            <CreateNote />
-            {this.props.editing ? <EditNote /> :
-            this.props.notes.length > 0 ?
-            <ViewNote note={this.props.notes[0]} /> : null }
+            { this.props.viewing ?
+              ((this.props.notes.length > 0 && this.props.noteInView !== null) ?
+                <ViewNote note={this.props.noteInView} /> : null) :
+                (this.props.adding ? <CreateNote /> : <EditNote note={this.props.noteInView} />)
+            }
           </div>
         </div>
       </div>
-
-
-        {/* {this.state.editing ? <EditNote /> : <CreateNote /> } */}
-        {/* <ListNotes notes={this.props.notes}/> */}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  console.log("notesContainer:", state)
   return {
     notes: state.allNotes.notes,
-    editing: state.editing
+    fetching: state.fetching,
+    editing: state.editing,
+    adding: state.adding,
+    viewing: state.viewing,
+    noteInView: state.noteInView
   }
 }
 
-export default connect(mapStateToProps)(NotesContainer);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchNotes: () => dispatch(fetchNotes()),
+    updateCurrentNote: note => dispatch(updateNoteInView(note)),
+    startViewing: () => dispatch(startViewing()),
+    // stopViewing: () => dispatch(stopViewing()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotesContainer);
+
+

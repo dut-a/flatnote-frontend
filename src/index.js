@@ -1,14 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import noteReducer from './reducers/noteReducer';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 
-let store = createStore(noteReducer);
+let store = createStore(noteReducer, applyMiddleware(thunk));
 
 render(
   <Provider store={store}>

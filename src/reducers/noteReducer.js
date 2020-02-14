@@ -4,7 +4,6 @@ import { combineReducers } from 'redux'
 export const allNotes = function(state = { notes: [] }, action) {
   switch (action.type) {
     case C.ADD_NOTE:
-      console.log({ notes: [...state.notes, action.note] });
       return {
         notes: state.notes.concat(action.note)
       };
@@ -57,10 +56,24 @@ export const fetching = (state=false, action) => {
   }
 }
 
+/** for conditional display and editing */
+export const noteInView = function(state = null, action) {
+  switch (action.type) {
+    case C.NOTE_IN_VIEW:
+      return {
+        data: action.note
+      };
+    default:
+      return state
+  }
+}
+
 export const adding = (state = false, action) => {
   switch(action.type) {
     case C.ACTIONS.ADDING:
       return true
+    case C.ACTIONS.FINISH_ADDING:
+      return false
     default:
       return state
   }
@@ -70,6 +83,8 @@ export const viewing = (state = false, action) => {
   switch(action.type) {
     case C.ACTIONS.VIEWING:
       return true
+      case C.ACTIONS.FINISH_VIEWING:
+        return false
     default:
       return state
   }
@@ -79,6 +94,8 @@ export const editing = (state = false, action) => {
   switch(action.type) {
     case C.ACTIONS.EDITING:
       return true
+      case C.ACTIONS.FINISH_EDITING:
+        return false
     default:
       return state
   }
@@ -86,6 +103,7 @@ export const editing = (state = false, action) => {
 
 export default combineReducers({
   allNotes,
+  noteInView,
   errors,
   fetching,
   adding,

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import uuid from "uuid";
-import { addNote } from '../actions/notes'
+import { addNoteToApi } from '../actions/notes'
 
 class CreateNote extends Component {
   constructor() {
@@ -22,10 +21,10 @@ class CreateNote extends Component {
   handleSubmit = event => {
     event.preventDefault();
     let note = {
-      id: uuid(),
-      ...this.state
+      ...this.state,
+      user_id: 9
     }
-    this.props.addNote(note);
+    this.props.addNoteToApi(note);
   }
 
   render() {
@@ -66,19 +65,21 @@ class CreateNote extends Component {
               />&nbsp;
             </label>
           </div>
+
           <div>
             <input type="submit" value="Save" />
           </div>
+
        </form>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addNote: note => dispatch(addNote(note))
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     addNote: note => dispatch(addNote(note))
+//   };
+// };
 
-export default connect(null, mapDispatchToProps)(CreateNote);
+export default connect(null, { addNoteToApi })(CreateNote);

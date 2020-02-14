@@ -1,28 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { editNote } from '../actions/notes'
+import { editNoteOnApi } from '../actions/notes'
 
 class EditNote extends Component {
-  constructor() {
-    super();
-    this.state = {
-      id: this.props.note.id,
-      title: this.props.note.title,
-      details: this.props.note.details,
-      tags: this.props.note.tags
-    };
-  }
-
-  // handleChange = event => {
-  //   this.setState({
-  //     [event.target.name]: event.target.value
-  //   });
-  // };
-
-  // handleSubmit = event => {
-  //   event.preventDefault();
-  //   this.props.addNote(this.state);
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     title: this.props.note.title,
+  //     details: this.props.note.details,
+  //     tags: this.props.note.tags
+  //   };
   // }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    let note = this.state;
+    this.props.editNoteOnApi(note);
+  }
 
   render() {
     return(
@@ -35,7 +35,7 @@ class EditNote extends Component {
               <input
                 type="text"
                 name="title"
-                value={this.state.title}
+                value={this.props.note.title}
                 onChange={e => this.handleChange(e)}
               />&nbsp;
             </label>
@@ -46,7 +46,7 @@ class EditNote extends Component {
               Details:
               <textarea
                 name="details"
-                value={this.state.details}
+                value={this.props.note.details}
                 onChange={e => this.handleChange(e)}
               />
             </label>
@@ -58,7 +58,7 @@ class EditNote extends Component {
               <input
                 type="text"
                 name="tags"
-                value={this.state.tags}
+                value={this.props.note.tags}
                 onChange={e => this.handleChange(e)}
               />&nbsp;
             </label>
@@ -73,17 +73,29 @@ class EditNote extends Component {
   }
 }
 
-const mapStateToProps = (state, note) => {
-  console.log("editNote:", state)
+// eslint-disable-next-line
+const mapStateToProps = state => {
   return {
-    note
+    // note: state.noteInView.data,
+    note: state.allNotes,
+    fetching: state.fetching,
+    editing: state.editing,
+    adding: state.adding,
+    viewing: state.viewing
+  }
+}
+ 
+const mapDispatchToProps = dispatch => {
+  return {
+    // delete: noteId => dispatch(deleteNote(noteId)),
+    // edit: note => dispatch(editNote(note)),
+    // stopViewing: () => dispatch(finishViewing()),
+    // startEditing: () => dispatch(startEditing()),
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    editNote: note => dispatch(editNote(note))
-  };
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(EditNote);
+
+// export default connect(null, { editNoteOnApi })(EditNote);
+
+
