@@ -7,6 +7,8 @@ import {
   finishAdding,
   startViewing,
   finishViewing,
+  startDeleting,
+  finishDeleting,
   startEditing,
   finishEditing
 } from '../actions/notes';
@@ -21,40 +23,45 @@ class ViewNote extends Component {
     this.props.startEditing();
   }
 
+  startDeleting = () => {
+    this.props.startDeleting();
+  }
+
   handleEditing = event => {
     event.preventDefault();
     this.stopViewing();
     this.startEditing();
     console.log("EDITING the note: ", this.props.note);
-    console.log("CURRENT PROPS (VN):", this.props);
   }
 
   handleDelete = event => {
     event.preventDefault();
-    this.props.addDelete(this.state);
+    // this.props.addDelete(this.state);
+    console.log("deleting noteId: ", this.props.note.id)
   }
 
   render() {
     return(
-      <div>
+      <div className="note-detail">
         <form onSubmit={e => this.handleSubmit(e) } >
           <div>
             <h1>{this.props.note.title}</h1>
           </div>
-          <div>
+          <div className="note-body">
             <p>{this.props.note.details}</p>
           </div>
           <div>
-            <label>
-              Tags: <span>{this.props.note.tags}</span>
-            </label>
+            <p className="note-tags-label">Tags</p>
+            <p id="note-tags-body">{this.props.note.tags}</p>
           </div>
-          <div>
+          <div id="note-body-buttons">
             <button
+              className="btn btn-danger btn-sm btn-note"
               name="delete"
-              onClick={e => this.handleEditing(e) }
+              onClick={e => this.handleDelete(e) }
             >Delete</button>
             <button
+              className="btn btn-info btn-sm btn-note"
               name="edit"
               onClick={e => this.handleEditing(e) }
             >Edit</button>
@@ -81,6 +88,7 @@ const mapDispatchToProps = dispatch => {
     edit: note => dispatch(editNote(note)),
     stopViewing: () => dispatch(finishViewing()),
     startEditing: () => dispatch(startEditing()),
+    startDeleting: () => dispatch(startDeleting()),
   }
 }
 

@@ -54,8 +54,7 @@ class NotesContainer extends Component {
       <div className="note-list">
       <div className="container">
         <div className="row">
-          <div className="col-5" style={{overflowY: "auto", height: "640px"}}>
-            Notes list
+          <div className="col-5 note-list-container" style={{}}>
             { this.props.notes.length > 0 ?
               this.handleLoading() : this.noNotes() }
           </div>

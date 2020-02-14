@@ -90,6 +90,17 @@ export const viewing = (state = false, action) => {
   }
 }
 
+export const deleting = (state = false, action) => {
+  switch(action.type) {
+    case C.ACTIONS.DELETING:
+      return true
+      case C.ACTIONS.FINISH_DELETING:
+        return false
+    default:
+      return state
+  }
+}
+
 export const editing = (state = false, action) => {
   switch(action.type) {
     case C.ACTIONS.EDITING:

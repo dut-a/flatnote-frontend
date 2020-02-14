@@ -26,46 +26,57 @@ class EditNote extends Component {
 
   render() {
     return(
-      <div>
-        <div>Edit Note</div>
+      <div style={{marginTop: "5px"}}>
         <form onSubmit={e => this.handleSubmit(e) } >
-          <div>
-            <label>
-              Title:
+          <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="note-title">Title</span>
+              </div>
               <input
                 type="text"
                 name="title"
+                className="form-control"
+                placeholder="Enter title"
+                aria-label="Title"
+                aria-describedby="note-title"
                 value={this.props.note.title}
                 onChange={e => this.handleChange(e)}
-              />&nbsp;
-            </label>
-          </div>
-
-          <div>
-            <label>
-              Details:
-              <textarea
-                name="details"
-                value={this.props.note.details}
-                onChange={e => this.handleChange(e)}
               />
-            </label>
           </div>
-
-          <div>
-            <label>
-              Tags:
-              <input
-                type="text"
-                name="tags"
-                value={this.props.note.tags}
-                onChange={e => this.handleChange(e)}
-              />&nbsp;
-            </label>
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Details</span>
+            </div>
+            <textarea
+              style={{height: "140px"}}
+              className="form-control"
+              aria-label="Note details"
+              name="details"
+              placeholder="Enter note details"
+              cols="20"
+              value={this.props.note.details}
+              onChange={e => this.handleChange(e)}></textarea>
           </div>
-
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="note-tags">Tags</span>
+            </div>
+            <input
+              type="text"
+              name="tags"
+              value={this.props.note.tags}
+              onChange={e => this.handleChange(e)}
+              className="form-control"
+              placeholder="Enter tags"
+              aria-label="Tags"
+              aria-describedby="note-tags"
+              />
+          </div>
           <div>
-            <input type="submit" value="Save" />
+            <input
+              className="btn btn-success btn-sm btn-note"
+              type="submit" value="Save"
+            />
           </div>
        </form>
       </div>

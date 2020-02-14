@@ -51,5 +51,37 @@
 .note-list p {
   font-size: 0.9em;
 }
+.note-list-container {
+  overflow-y: auto;
+  height: 640px;
+  border-left: 1px solid green;
+  margin-top: 0.35%;
+}
+.note-detail {
+  margin-left: 10%;
+  margin-top: 3%;
+}
+.note-body {
+  margin-top: 5%;
+  margin-bottom: 7%;
+}
+.note-tags-label {
+  margin-bottom: 0.5%;
+  font-weight: bold;
+}
+#note-tags-body {
+  font-size: .7em;
+  font-style: italic;
+  margin-left: 1.5%;
+}
+#note-body-buttons {
+  margin-top: 10%;
+}
+.btn-note {
+  width: 80px;
+  margin-right: 2%;
+}
+
+
 
 
