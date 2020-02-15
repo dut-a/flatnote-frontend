@@ -18,6 +18,17 @@ const constants = {
 		EDITING: "EDITING",
 		FINISH_EDITING: "FINISH_EDITING",
 	},
+	HTTP: {
+		DELETE: "DELETE",
+		GET: "GET",
+		PATCH: "PATCH",
+		POST: "POST",
+		PUT: "PUT",
+		HEADERS: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+	},
   URLS: {
     FLATNOTES_API: 'http://localhost:3000/api/v1/notes'
   }

@@ -60,11 +60,8 @@ export const fetchNotes = () => dispatch => {
 
 export const addNoteToApi = note => dispatch => {
   let reqConf = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
+    method: C.HTTP.POST,
+    headers:  C.HTTP.HEADERS,
     body: JSON.stringify(note)
   }
   console.log("sending: ", reqConf.body);
@@ -72,24 +69,21 @@ export const addNoteToApi = note => dispatch => {
   fetch(C.URLS.FLATNOTES_API, reqConf)
     .then(response => response.json())
     .then(data => {
-      // return dispatch(addNote(data.note));
-      // console.log("Note created:", data.note);
+      dispatch(addNote(data.note));
+      console.log("Note created:", data.note);
       console.log("Note spread out:", data.note);
-      // dispatch(finishFetching()); // TODO: should this be here?
+      dispatch(finishFetching()); // TODO: should this be here?
     })
     .catch(error => {
-      return dispatch(addError(error.message));
-      // dispatch(finishFetching());
+      dispatch(addError(error.message));
+      dispatch(finishFetching());
     });
 }
 
 export const editNoteOnApi = note => dispatch => {
   let reqConf = {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
+    method: C.HTTP.PATCH,
+    headers:  C.HTTP.HEADERS,
     body: JSON.stringify(note)
   }
   console.log("sending: ", reqConf.body);
@@ -97,16 +91,35 @@ export const editNoteOnApi = note => dispatch => {
   fetch(C.URLS.FLATNOTES_API + `/${note.id}`, reqConf)
     .then(response => response.json())
     .then(data => {
-      return dispatch(editNote(data.note));
-      // console.log("Note edited:", data.note);
-      // console.log("Note spread out:", data.note);
-      // dispatch(finishFetching()); // TODO: should this be here?
+      dispatch(editNote(data.note));
+      console.log("Note edited:", data.note);
+      console.log("Note spread out:", data.note);
+      dispatch(finishFetching()); // TODO: should this be here?
     })
     .catch(error => {
-      return dispatch(addError(error.message));
-      // dispatch(finishFetching());
+      dispatch(addError(error.message));
+      dispatch(finishFetching());
     });
     dispatch(finishFetching());
+}
+
+export const deleteNoteFromApi = noteId => dispatch => {
+  let reqConf = {
+    method: C.HTTP.DELETE,
+    headers: C.HTTP.HEADERS
+  }
+  console.log("deleteNoteFromApi(), deleting:", noteId);
+  fetch(C.URLS.FLATNOTES_API + `/${noteId}`, reqConf)
+    .then(res => res.json())
+    .then(data => {
+      dispatch(deleteNote(noteId));
+      console.log("Returned from DELETE:", data);
+      dispatch(finishDeleting());
+    })
+    .catch(error => {
+      dispatch(addError(error.message));
+      dispatch(finishDeleting());
+    });
 }
 
 

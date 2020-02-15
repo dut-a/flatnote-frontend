@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { deleteNote, editNote } from '../actions/notes'
+import { deleteNoteFromApi, deleteNote, editNote } from '../actions/notes';
 
 import {
   startAdding,
@@ -42,7 +42,8 @@ class ViewNote extends Component {
 
     // start editing
     this.startDeleting();
-    console.log("deleting noteId: ", this.props.note.id)
+    console.log("deleting noteId: ", this.props.note.id);
+    this.props.deleteNote(this.props.note.id);
   }
 
   render() {
@@ -81,9 +82,9 @@ const mapStateToProps = state => {
   return {
     note: state.noteInView.data,
     fetching: state.fetching,
+    viewing: state.viewing,
     editing: state.editing,
-    adding: state.adding,
-    viewing: state.viewing
+    deleting: state.deleting
   }
 }
  
@@ -93,7 +94,8 @@ const mapDispatchToProps = dispatch => {
     startEditing: () => dispatch(startEditing()),
     stopEditing: () => dispatch(finishEditing()),
     startDeleting: () => dispatch(startDeleting()),
-    stopDeleting: () => dispatch(finishDeleting())
+    stopDeleting: () => dispatch(finishDeleting()),
+    deleteNote: noteId => dispatch(deleteNoteFromApi(noteId))
   }
 }
 

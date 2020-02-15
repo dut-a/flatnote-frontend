@@ -17,6 +17,7 @@ import {
 } from '../../actions/notes';
 
 class NotesContainer extends Component {
+
   componentDidMount() {
     this.props.fetchNotes();
   }
