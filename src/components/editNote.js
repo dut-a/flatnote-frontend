@@ -27,6 +27,7 @@ class EditNote extends Component {
   render() {
     return(
       <div style={{marginTop: "5px"}}>
+        <h3>Edit note</h3>
         <form onSubmit={e => this.handleSubmit(e) } >
           <div className="input-group mb-3">
               <div className="input-group-prepend">

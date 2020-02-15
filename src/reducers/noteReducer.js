@@ -13,7 +13,8 @@ export const allNotes = function(state = { notes: [] }, action) {
           return {
             ...note,
             title: action.note.title,
-            details: action.note.details
+            details: action.note.details,
+            tags: action.note.tags
           }
         } else {
           return note
@@ -119,6 +120,7 @@ export default combineReducers({
   fetching,
   adding,
   viewing,
+  deleting,
   editing
 })
 

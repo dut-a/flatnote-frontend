@@ -30,6 +30,7 @@ class CreateNote extends Component {
   render() {
     return(
       <div style={{width: "70%", margin: "0 auto", marginTop: "2%"}}>
+        <h3>Add new note</h3>
         <form onSubmit={e => this.handleSubmit(e) } >
           <div className="input-group mb-3">
               <div className="input-group-prepend">

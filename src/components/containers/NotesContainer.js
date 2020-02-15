@@ -48,6 +48,18 @@ class NotesContainer extends Component {
       return this.renderNotes();
     }
   }
+
+  handleDetailPane = () => {
+    if (this.props.viewing) {
+      if (this.props.notes.length > 0 && this.props.noteInView !== null) {
+        return <ViewNote note={this.props.noteInView} />;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
   
   render() {
     return (
@@ -59,11 +71,7 @@ class NotesContainer extends Component {
               this.handleLoading() : this.noNotes() }
           </div>
           <div className="col-7">
-            { this.props.viewing ?
-              ((this.props.notes.length > 0 && this.props.noteInView !== null) ?
-                <ViewNote note={this.props.noteInView} /> : null) :
-                (this.props.adding ? <CreateNote /> : <EditNote note={this.props.noteInView} />)
-            }
+            { this.handleDetailPane() }
           </div>
         </div>
       </div>

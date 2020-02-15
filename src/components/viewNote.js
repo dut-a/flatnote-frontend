@@ -15,28 +15,33 @@ import {
 
 class ViewNote extends Component {
 
-  stopViewing = () => {
-    this.props.stopViewing();
-  }
+  stopViewing = () => this.props.stopViewing();
 
-  startEditing = () => {
-    this.props.startEditing();
-  }
+  startEditing = () => this.props.startEditing();
+  stopEditing = () => this.props.stopEditing();
 
-  startDeleting = () => {
-    this.props.startDeleting();
-  }
+  startDeleting = () => this.props.startDeleting();
+  stopDeleting = () => this.props.stopDeleting();
 
   handleEditing = event => {
     event.preventDefault();
+    // stop everything else
     this.stopViewing();
+    this.stopDeleting();
+
+    // start editing
     this.startEditing();
     console.log("EDITING the note: ", this.props.note);
   }
 
   handleDelete = event => {
     event.preventDefault();
-    // this.props.addDelete(this.state);
+    // stop everything else
+    this.stopViewing();
+    this.stopEditing();
+
+    // start editing
+    this.startDeleting();
     console.log("deleting noteId: ", this.props.note.id)
   }
 
@@ -84,11 +89,11 @@ const mapStateToProps = state => {
  
 const mapDispatchToProps = dispatch => {
   return {
-    delete: noteId => dispatch(deleteNote(noteId)),
-    edit: note => dispatch(editNote(note)),
     stopViewing: () => dispatch(finishViewing()),
     startEditing: () => dispatch(startEditing()),
+    stopEditing: () => dispatch(finishEditing()),
     startDeleting: () => dispatch(startDeleting()),
+    stopDeleting: () => dispatch(finishDeleting())
   }
 }
 
