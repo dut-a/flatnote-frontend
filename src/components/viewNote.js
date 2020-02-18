@@ -1,16 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteNoteFromApi, deleteNote, editNote } from '../actions/notes';
 
 import {
-  startAdding,
-  finishAdding,
-  startViewing,
   finishViewing,
   startDeleting,
   finishDeleting,
   startEditing,
-  finishEditing
+  finishEditing,
+  deleteNoteFromApi
 } from '../actions/notes';
 
 class ViewNote extends Component {
@@ -31,7 +28,6 @@ class ViewNote extends Component {
 
     // start editing
     this.startEditing();
-    console.log("EDITING the note: ", this.props.note);
   }
 
   handleDelete = event => {

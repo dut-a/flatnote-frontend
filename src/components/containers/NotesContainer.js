@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import CreateNote from '../createNote'
 import EditNote from '../editNote';
 import ViewNote from '../viewNote';
 import { connect } from 'react-redux'
@@ -8,12 +7,7 @@ import Note from '../Note';
 import {
   fetchNotes,
   updateNoteInView,
-  startAdding,
-  finishAdding,
-  startViewing,
-  finishViewing,
-  startEditing,
-  finishEditing
+  startViewing
 } from '../../actions/notes';
 
 class NotesContainer extends Component {
@@ -31,10 +25,6 @@ class NotesContainer extends Component {
   startViewing = () => {
     this.props.startViewing();
   }
-
-  // stopViewing = () => {
-  //   this.props.stopViewing();
-  // }
 
   renderNotes = () => this.props.notes.map(note => {
     return <Note key={note.id} note={note} handleClick={this.handleClick} />
@@ -57,6 +47,9 @@ class NotesContainer extends Component {
       } else {
         return null;
       }
+    } else if (this.props.editing) {
+      console.log("notesContainer() version called...")
+      return <EditNote note={this.props.note} />;
     } else {
       return null;
     }

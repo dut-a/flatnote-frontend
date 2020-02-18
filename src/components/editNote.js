@@ -3,32 +3,33 @@ import { connect } from 'react-redux';
 import { editNoteOnApi } from '../actions/notes'
 
 class EditNote extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     title: this.props.note.title,
-  //     details: this.props.note.details,
-  //     tags: this.props.note.tags
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: props.note.id,
+      title: props.note.title,
+	    details: props.note.details,
+	    tags: props.note.tags,
+	    user_id: 6 // make this dynamic (currently logged in user)
+    }
+  }
 
-  handleChange = event => {
+  updateValues = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
 
-  handleSubmit = event => {
+  performEdit = event => {
     event.preventDefault();
-    let note = this.state;
-    this.props.editNoteOnApi(note);
+    this.props.editNote(this.state);
   }
 
   render() {
     return(
       <div style={{marginTop: "5px"}}>
         <h3>Edit note</h3>
-        <form onSubmit={e => this.handleSubmit(e) } >
+        <form onSubmit={e => this.performEdit(e) } >
           <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text" id="note-title">Title</span>
@@ -40,8 +41,8 @@ class EditNote extends Component {
                 placeholder="Enter title"
                 aria-label="Title"
                 aria-describedby="note-title"
-                value={this.props.note.title}
-                onChange={e => this.handleChange(e)}
+                value={this.state.title}
+                onChange={e => this.updateValues(e)}
               />
           </div>
           <div className="input-group mb-3">
@@ -55,8 +56,8 @@ class EditNote extends Component {
               name="details"
               placeholder="Enter note details"
               cols="20"
-              value={this.props.note.details}
-              onChange={e => this.handleChange(e)}></textarea>
+              value={this.state.details}
+              onChange={e => this.updateValues(e)}></textarea>
           </div>
           <div className="input-group mb-3">
             <div className="input-group-prepend">
@@ -65,8 +66,8 @@ class EditNote extends Component {
             <input
               type="text"
               name="tags"
-              value={this.props.note.tags}
-              onChange={e => this.handleChange(e)}
+              value={this.state.tags}
+              onChange={e => this.updateValues(e)}
               className="form-control"
               placeholder="Enter tags"
               aria-label="Tags"
@@ -85,11 +86,9 @@ class EditNote extends Component {
   }
 }
 
-// eslint-disable-next-line
 const mapStateToProps = state => {
   return {
-    // note: state.noteInView.data,
-    note: state.allNotes,
+    note: state.noteInView.data,
     fetching: state.fetching,
     editing: state.editing,
     adding: state.adding,
@@ -99,15 +98,10 @@ const mapStateToProps = state => {
  
 const mapDispatchToProps = dispatch => {
   return {
-    // delete: noteId => dispatch(deleteNote(noteId)),
-    // edit: note => dispatch(editNote(note)),
-    // stopViewing: () => dispatch(finishViewing()),
-    // startEditing: () => dispatch(startEditing()),
+    editNote: note => dispatch(editNoteOnApi(note))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditNote);
-
-// export default connect(null, { editNoteOnApi })(EditNote);
 
 

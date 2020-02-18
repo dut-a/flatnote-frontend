@@ -86,21 +86,20 @@ export const editNoteOnApi = note => dispatch => {
     headers:  C.HTTP.HEADERS,
     body: JSON.stringify(note)
   }
-  console.log("sending: ", reqConf.body);
-  dispatch(startFetching());
+  console.log("editNoteOnApi(), editing:", note);
+  console.log("editNoteOnApi(), sending:", reqConf);
   fetch(C.URLS.FLATNOTES_API + `/${note.id}`, reqConf)
     .then(response => response.json())
     .then(data => {
       dispatch(editNote(data.note));
       console.log("Note edited:", data.note);
       console.log("Note spread out:", data.note);
-      dispatch(finishFetching()); // TODO: should this be here?
+      dispatch(finishEditing()); // TODO: should this be here?
     })
     .catch(error => {
       dispatch(addError(error.message));
-      dispatch(finishFetching());
+      dispatch(finishEditing());
     });
-    dispatch(finishFetching());
 }
 
 export const deleteNoteFromApi = noteId => dispatch => {

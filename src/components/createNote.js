@@ -22,7 +22,7 @@ class CreateNote extends Component {
     event.preventDefault();
     let note = {
       ...this.state,
-      user_id: 9
+      user_id: 9 // make this dynamic (currently logged in user)
     }
     this.props.addNoteToApi(note);
   }
@@ -87,11 +87,5 @@ class CreateNote extends Component {
     )
   }
 }
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     addNote: note => dispatch(addNote(note))
-//   };
-// };
 
 export default connect(null, { addNoteToApi })(CreateNote);
