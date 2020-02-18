@@ -19,7 +19,7 @@ class NotesContainer extends Component {
   handleClick = note => {
     this.props.updateCurrentNote(note);
     this.startViewing();
-    console.log("CURRENT PROPS:", this.props);
+    console.log("notesContainer(), CURRENT PROPS:", this.props);
   }
 
   startViewing = () => {
@@ -75,8 +75,16 @@ class NotesContainer extends Component {
 }
 
 const mapStateToProps = state => {
+  /* TODO:
+    1. Refresh notes list after delete (deleted note shouldn't appear again).
+    2. Look into why 'state.allNotes.notes' doesn't come back as is after 'delete'.
+  */
+  let currentNotes = state.allNotes.notes;
+  if (currentNotes === undefined) {
+    currentNotes = state.allNotes;
+  }
   return {
-    notes: state.allNotes.notes,
+    notes: currentNotes,
     fetching: state.fetching,
     editing: state.editing,
     adding: state.adding,
@@ -89,8 +97,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchNotes: () => dispatch(fetchNotes()),
     updateCurrentNote: note => dispatch(updateNoteInView(note)),
-    startViewing: () => dispatch(startViewing()),
-    // stopViewing: () => dispatch(stopViewing()),
+    startViewing: () => dispatch(startViewing())
   }
 }
 
